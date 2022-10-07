@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<style>
+			body
+			{
+				background-color: #222222;
+				font-size: 24px;
+				color: white;
+			}
+		</style>
+		<script
+		src="https://code.jquery.com/jquery-3.6.1.js"
+		integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+		crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			
+			var number = Math.floor(Math.random()*5)+1; //generates random number from 1 to 5
+
+			var timer1 = 0; //base timer count
+			var tiemr2 = 0;
+			var timer3 = 0;
+			
+			function setslide(nr) //sets slime by click
+			{
+				clearTimeout(timer1); //clears timer/restarts it
+				clearTimeout(timer2);
+				number = nr - 1; //shows exact slide, there is -1 cuz function changeslide is adding 1 to get that exact number
+				hide(); //hide animation
+				timer3 = setTimeout("changeslide()", 500); //sets timer to change slide
+			}
+
+			function hide() //hide animation
+			{
+				$("#slider").stop(); //reset previous fadeout
+				$("#slider").fadeOut(500); //starts new animation
+			}
+
+			function changeslide() //change slide
+			{
+				clearTimeout(timer3);  //clears previous timer
+				number++; //adds number to get to another slide
+				if (number > 5) //this whole if resets counting if there is more than 5
+				{
+					number = 1;
+				}
+
+				var file = "<img src=\"slajdy/slajd" + number + ".png\"/>"; //creates source for img
+
+				document.getElementById("slider").innerHTML = file; //fills div with file value(imports img to that div)
+				$("#slider").fadeIn(500);//fades in image
+
+				timer1 = setTimeout("changeslide()", 5000); //changes slide after 5s
+				timer2 = setTimeout("hide()", 4500);//hide animation after 4.5s
+			}
+		</script>
+	</head>
+	<body onload="changeslide()">
+		<span onclick="setslide(1)" style="cursor: pointer;">[1]</span>
+		<span onclick="setslide(2)" style="cursor: pointer;">[2]</span>
+		<span onclick="setslide(3)" style="cursor: pointer;">[3]</span>
+		<span onclick="setslide(4)" style="cursor: pointer;">[4]</span>
+		<span onclick="setslide(5)" style="cursor: pointer;">[5]</span>
+		<div id="slider"></div>
+	</body>
+</html>
